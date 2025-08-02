@@ -3,12 +3,12 @@ const ExpressError = require('../utils/ExpressError.js');
 const geocodingKey = process.env.GEOCODING_API_KEY;
 const opencage = require('opencage-api-client');
 
-function toGeojson(geometry) {
-    return {
-        type: "Point",
-        coordinates: [geometry.lng, geometry.lat]
+    function toGeojson(geometry) {
+        return {
+            type: "Point",
+            coordinates: [geometry.lng, geometry.lat]
+        }
     }
-}
 
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
@@ -30,10 +30,10 @@ module.exports.showListing = async (req, res) => {
     }
 }
 
-const maxConfidence = function(arr) {
-    let res;
-    for(let i = 0; i < arr.length-1; i++){
-        res = arr[i].confidence > arr[i+1].confidence ? arr[i] : arr[i+1];
+const maxConfidence = function (arr) {
+    let res = arr[0];
+    for (let i = 0; i < arr.length - 1; i++) {
+        res = arr[i].confidence > arr[i + 1].confidence ? arr[i] : arr[i + 1];
     }
     return res;
 }
@@ -47,7 +47,6 @@ module.exports.createListing = async (req, res, next) => {
     newListing.image = { url, filename };
     newListing.geometry = toGeojson(maxConfidence(response.results).geometry);
     let savedListing = await newListing.save();
-    console.log(savedListing);
     req.flash("success", "New Listing Created");
     res.redirect("/listings");
 }
@@ -71,7 +70,7 @@ module.exports.updateListing = async (req, res) => {
     }
     let { id } = req.params;
     let listing = await Listing.findByIdAndUpdate(id, req.body.listing);
-    if(req.body.listing.location){
+    if (req.body.listing.location) {
         let response = await opencage.geocode({ q: req.body.listing.location, key: geocodingKey, limit: 1 });
         listing.geometry = toGeojson(maxConfidence(response.results).geometry);
     }

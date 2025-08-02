@@ -187,6 +187,10 @@ body {
         opacity: 0.8 !important;
     }
 
+    .review-card {
+        padding: 1rem;
+    }
+
 @media (max-width: 992px) {
     .scrollable {
         overflow-x: scroll;

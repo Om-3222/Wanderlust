@@ -31,24 +31,28 @@ if (password) {
 }
 
 let scrollableFilters = document.querySelector(".scrollable");
-scrollableFilters.addEventListener("wheel", (event) => {
-  event.preventDefault();
-  const isTouchpad = Math.abs(event.deltaX);
-  const scrollAmount = isTouchpad ? event.deltaX : event.deltaY;
-  scrollableFilters.scrollBy({
-    left: scrollAmount
+if(scrollableFilters){
+  scrollableFilters.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    const isTouchpad = Math.abs(event.deltaX);
+    const scrollAmount = isTouchpad ? event.deltaX : event.deltaY;
+    scrollableFilters.scrollBy({
+      left: scrollAmount
+    })
   })
-})
+}
 
 let taxSwitch = document.getElementById("switchCheckDefault");
-taxSwitch.addEventListener("click", () => {
-  let taxInfo = document.getElementsByClassName("tax-info");
-  for (element of taxInfo) {
-    if (taxSwitch.checked) {
-      element.style.display = "inline";
-    } else {
-      element.style.display = "None";
+if(taxSwitch){
+  taxSwitch.addEventListener("click", () => {
+    let taxInfo = document.getElementsByClassName("tax-info");
+    for (element of taxInfo) {
+      if (taxSwitch.checked) {
+        element.style.display = "inline";
+      } else {
+        element.style.display = "None";
+      }
     }
-  }
-
-})
+    
+  })
+}

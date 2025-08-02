@@ -6,7 +6,6 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-console.log(coordinates);
 let marker = L.marker(coordinates).addTo(map).bindPopup('<p>Exact Location provided after booking!</p>').openPopup();
 
 let circle = L.circle(coordinates, {
